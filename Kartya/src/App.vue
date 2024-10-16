@@ -1,81 +1,73 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from "vue-router";
+import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
   <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/kartyak">Kártyák</RouterLink>
-        <RouterLink to="/tablazat">Táblázat</RouterLink>
-      </nav>
-
+    <div class="suicideboys-box">
+      <div class="box-content">
+        <h1>Kártya Projekt</h1>
+        <nav>
+          <div class="navbar-links">
+            <RouterLink to="/">Home</RouterLink> |
+            <RouterLink to="/tablazat">Táblázat</RouterLink> |
+            <RouterLink to="/kartyak">Kártyák</RouterLink>
+          </div>
+        </nav>
+      </div>
+    </div>
   </header>
-
-  <RouterView />
+  <div class="my-border p-2">
+    <RouterView />
+  </div>
 </template>
 
+
 <style scoped>
+/* Global styles */
+body {
+  background-color: #154315;
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
 header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
+  background: linear-gradient(135deg, #000000, #4b4b4b);
+  padding: 20px;
   text-align: center;
-  margin-top: 2rem;
+  border-bottom: 2px solid #ffffff;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.suicideboys-box {
+  max-width: 1200px;
+  margin: auto;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #ff4757;
+  text-transform: uppercase;
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+/* Navbar styles */
+.navbar-links {
+  margin-top: 10px;
 }
 
-nav a:first-of-type {
-  border: 0;
+.navbar-links a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: color 0.3s;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.navbar-links a:hover {
+  color: #ff4757;
 }
 </style>
