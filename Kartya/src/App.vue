@@ -27,7 +27,6 @@ import HelloWorld from "./components/HelloWorld.vue";
 <style scoped>
 /* Global styles */
 body {
-  background-color: #154315;
   color: #ffffff;
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -70,4 +69,6 @@ h1 {
 .navbar-links a:hover {
   color: #ff4757;
 }
+
+
 </style>

@@ -1,29 +1,32 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <table class="col-md-8">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Név</th>
-                        <th scope="col">Allias</th>
-                        <th scope="col">Banda</th>
-                        <th scope="col">Foglalkozás</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(member, i) in G59members" :key="i">
-                        <th scope="row">{{ member.id }}</th>
-                        <td>{{ member.nev }}</td>
-                        <td>{{ member.allias }}</td>
-                        <td>{{ member.band }}</td>
-                        <td>{{ member.foglalkozas }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="table col-md-8">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Név</th>
+                            <th scope="col">Allias</th>
+                            <th scope="col">Banda</th>
+                            <th scope="col">Foglalkozás</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(member, i) in filteredCharacters" :key="i">
+                            <th scope="row">{{ member.id }}</th>
+                            <td>{{ member.nev }}</td>
+                            <td>{{ member.allias }}</td>
+                            <td>{{ member.band }}</td>
+                            <td>{{ member.foglalkozas }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -48,7 +51,7 @@ export default {
                     id: 3,
                     nev: "Ivan Ramirez",
                     allias: "Ramirez",
-                    band: "",
+                    band: "-",
                     foglalkozas: "Zenész",
                 },
                 {
@@ -62,42 +65,42 @@ export default {
                     id: 5,
                     nev: "Shermar Cuba Paul",
                     allias: "Night Lovell",
-                    band: "",
+                    band: "-",
                     foglalkozas: "Zenész",
                 },
                 {
                     id: 6,
                     nev: "Andrew Adolph",
                     allias: "Shakewell",
-                    band: "",
+                    band: "-",
                     foglalkozas: "Zenész",
                 },
                 {
                     id: 7,
                     nev: "Joshua Marchetta",
                     allias: "Chetta",
-                    band: "",
+                    band: "-",
                     foglalkozas: "Zenész",
                 },
                 {
                     id: 8,
-                    nev: "",
+                    nev: "-",
                     allias: "Crystalmeth",
-                    band: "",
+                    band: "-",
                     foglalkozas: "DJ",
                 },
                 {
                     id: 9,
                     nev: "Max Beck",
-                    allias: "",
-                    band: "",
+                    allias: "-",
+                    band: "-",
                     foglalkozas: "Fotós",
                 },
                 {
                     id: 10,
                     nev: "Adam Mariagga",
-                    allias: "",
-                    band: "",
+                    allias: "-",
+                    band: "-",
                     foglalkozas: "Ruha tervező",
                 },
             ],
@@ -109,7 +112,7 @@ export default {
                 ? this.searchedWord.toLowerCase()
                 : "";
 
-            const filtered = this.allCharacter.filter((character) => {
+            const filtered = this.G59members.filter((member) => {
                 return (
                     member.nev.toLowerCase().includes(searchTarget) ||
                     member.allias.toLowerCase().includes(searchTarget) ||
@@ -118,13 +121,64 @@ export default {
                 );
             });
 
-
-
             return filtered;
         },
     },
 
+
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.table-container {
+    margin: 20px auto;
+    max-width: 800px;
+    overflow-x: auto;
+    /* Enable horizontal scrolling on small screens */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.table th,
+.table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.table th {
+    background-color: #1c1c1c;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.table tr:hover {
+    background-color: #444;
+    /* Highlight row on hover */
+}
+
+.table td {
+    color: #e0e0e0;
+}
+
+.table tr:nth-child(even) {
+    background-color: #333;
+    /* Stripe effect for even rows */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+
+    .table th,
+    .table td {
+        padding: 10px;
+    }
+}
+</style>
