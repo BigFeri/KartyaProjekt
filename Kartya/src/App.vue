@@ -18,7 +18,7 @@ import HelloWorld from "./components/HelloWorld.vue";
       </div>
     </div>
   </header>
-  <div class="my-border p-2">
+  <div class="my-border p-3">
     <RouterView />
   </div>
 </template>
