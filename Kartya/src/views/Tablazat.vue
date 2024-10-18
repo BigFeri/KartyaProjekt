@@ -29,7 +29,13 @@
 
 
 <script>
+import computed from "vue";
 export default {
+    provide() {
+        return {
+            G59members: computed(() => this.G59members)
+        }
+    }
     data() {
         return {
             G59members: [
