@@ -29,13 +29,8 @@
 
 
 <script>
-import computed from "vue";
 export default {
-    provide() {
-        return {
-            G59members: computed(() => this.G59members)
-        }
-    }
+    inject: ['searchQuery'],
     data() {
         return {
             G59members: [
@@ -72,7 +67,7 @@ export default {
                     nev: "Shermar Cuba Paul",
                     allias: "Night Lovell",
                     band: "-",
-                    foglalkozas: "Zenész",
+                    foglalkozas: "Zenész/Producer",
                 },
                 {
                     id: 6,
@@ -114,8 +109,8 @@ export default {
     },
     computed: {
         filteredCharacters() {
-            const searchTarget = this.searchedWord
-                ? this.searchedWord.toLowerCase()
+            const searchTarget = this.searchQuery
+                ? this.searchQuery.toLowerCase()
                 : "";
 
             const filtered = this.G59members.filter((member) => {

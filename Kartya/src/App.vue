@@ -1,6 +1,46 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import { computed } from "vue";
+
+export default {
+  provide() {
+    return {
+      searchQuery: computed(() => this.searchQuery),
+    };
+  },
+  watch: {
+    searchWordInput(data) {
+      if (!data) {
+        this.searchQuery = null;
+      } else {
+        this.searchQuery = data;
+      }
+    },
+    searchQueryInput(newValue) {
+      if (!newValue) {
+        this.searchQuery = null;
+      } else {
+        this.searchQuery = newValue;
+      }
+    }
+  },
+  data() {
+    return {
+      searchQuery: null,
+      searchQueryInput: null,
+    };
+  },
+  computed: {
+    isHomePage() {
+      return this.$route.path === "/";
+    }
+  },
+  methods: {
+    performSearch() {
+      this.searchQuery = this.searchQueryInput;
+    }
+  }
+};
 </script>
 
 <template>
@@ -13,6 +53,13 @@ import HelloWorld from "./components/HelloWorld.vue";
             <RouterLink to="/">Home</RouterLink> |
             <RouterLink to="/tablazat">Táblázat</RouterLink> |
             <RouterLink to="/kartyak">Kártyák</RouterLink>
+          </div>
+
+          <div v-if="!isHomePage" class="d-flex align-items-center search-container" role="search">
+            <label for="searchQuery" class="form-label text-nowrap m-0 search-label"></label>
+            <input id="searchQuery" class="form-control me-2 ms-2 search-input" type="search" aria-label="Search"
+              v-model="searchQueryInput" @keyup.enter="performSearch" />
+            <button class="btn btn-outline-danger search-button" type="submit" @click="performSearch">Search</button>
           </div>
         </nav>
       </div>
@@ -69,6 +116,4 @@ h1 {
 .navbar-links a:hover {
   color: #ff4757;
 }
-
-
 </style>

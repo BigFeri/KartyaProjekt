@@ -3,7 +3,7 @@
     <div class="card">
       <slot name="kep"></slot>
       <div class="card-body">
-        <slot name="title"></slot>
+        <slot name="cím"></slot>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#halInfoModal"
           @click="onClickReszletek()">
           Részletek
