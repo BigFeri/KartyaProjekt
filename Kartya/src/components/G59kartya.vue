@@ -4,7 +4,7 @@
       <slot name="kep"></slot>
       <div class="card-body">
         <slot name="cím"></slot>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#halInfoModal"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#g59InfoModal"
           @click="onClickReszletek()">
           Részletek
         </button>

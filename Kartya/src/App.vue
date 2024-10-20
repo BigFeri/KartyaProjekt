@@ -73,6 +73,7 @@ export default {
 
 <style scoped>
 /* Global styles */
+/* Global styles */
 body {
   color: #ffffff;
   font-family: 'Arial', sans-serif;
@@ -115,5 +116,75 @@ h1 {
 
 .navbar-links a:hover {
   color: #ff4757;
+}
+
+/* Keresősáv és header reszponzív megjelenítés */
+.search-container {
+  margin-top: 20px;
+}
+
+.search-input {
+  width: 250px;
+}
+
+.search-button {
+  padding: 6px 12px;
+}
+
+/* Reszponzív stílusok kisebb képernyőkre */
+@media (max-width: 768px) {
+  header {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .navbar-links {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-links a {
+    padding: 8px 0;
+  }
+
+  .search-container {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .search-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+}
+
+/* Reszponzív stílusok nagyon kis képernyőkre */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .navbar-links {
+    font-size: 0.9em;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-button {
+    width: 100%;
+    padding: 8px;
+  }
 }
 </style>

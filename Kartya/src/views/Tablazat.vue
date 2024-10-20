@@ -133,9 +133,11 @@ export default {
 <style scoped>
 .table-container {
     margin: 20px auto;
-    max-width: 800px;
+    max-width: 100%;
     overflow-x: auto;
     /* Enable horizontal scrolling on small screens */
+    padding: 0 15px;
+    /* Add some padding for smaller screens */
 }
 
 .table {
@@ -174,12 +176,61 @@ export default {
     /* Stripe effect for even rows */
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+
+    .table th,
+    .table td {
+        padding: 12px;
+        font-size: 0.9em;
+        /* Smaller font size */
+    }
+
+    .table-container {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 576px) {
 
     .table th,
     .table td {
         padding: 10px;
+        font-size: 0.85em;
+        /* Further reduce font size on smaller screens */
+    }
+
+    .table-container {
+        padding: 0 5px;
+    }
+
+    /* Stack the table headers for very small screens */
+    .table {
+        display: block;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table tbody tr {
+        display: block;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #444;
+    }
+
+    .table tbody tr td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: none;
+    }
+
+    .table tbody tr td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #ffffff;
     }
 }
 </style>
