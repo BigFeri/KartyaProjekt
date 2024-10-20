@@ -30,4 +30,10 @@ npm run build
 
 
 # Feladat Leírás
+### Maga a feladat
+### Milyen technológiát használunk
+- backend,
+- frontend
+- dizájn
+- adatbázis
 

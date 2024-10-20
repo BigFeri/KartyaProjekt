@@ -1,4 +1,5 @@
 <template>
+
     <div class="karakter-kartyak">
         <G59kartya v-for="member in KeresettMember" :key="member.id" :id="member.id"
             @reszletekModalKezeles="reszletKezelo" class="kartya">
@@ -90,7 +91,7 @@ export default {
             const regex = new RegExp(this.searchQuery, "gi");
             return text.replace(regex, (match) => {
                 return `<span class="highlight">${match}</span>`;
-            });
+            });npm
         },
     },
     computed: {
