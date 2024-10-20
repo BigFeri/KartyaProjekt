@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" id="g59InfoModal" tabindex="-1" aria-labelledby="reszletekModalKezeles" aria-hidden="true">
+  <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="reszletekModalKezeles" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <slot></slot>
+          <p>{{ text }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
@@ -19,14 +19,6 @@
 
 <script>
 export default {
-  props: ["cím"] // Properly pass the "cím" prop instead of "title"
+  props: ["nev", "text", "modalId"], // Átadjuk a karakter nevét, szövegét és a modális ID-ját
 };
 </script>
-
-<style scoped>
-.my-pic {
-  border: 2px solid red !important;
-  border-radius: 6px;
-  margin: 0 10px 0 0 !important;
-}
-</style>

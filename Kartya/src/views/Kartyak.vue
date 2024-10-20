@@ -1,28 +1,29 @@
 <template>
     <div class="karakter-kartyak">
-        <G59kartya v-for="member in KeresettMember" :key="member.id" :member="member"
-            @reszletekModalKezeles="reszletKezelo">
+        <G59kartya v-for="member in KeresettMember" :key="member.id" :id="member.id"
+            @reszletekModalKezeles="reszletKezelo" class="kartya">
             <template v-slot:kep>
                 <img :src="member.kep" :alt="member.nev" class="karakter-kep" />
             </template>
-            <template v-slot:cim>
-                <p v-html="keresJelol(member.nev)"></p>
-            </template>
-            <!-- Részlet gomb hozzáadása -->
-            <template v-slot:action>
-                <button class="reszlet-gomb" @click="reszletKezelo(member.id)"
-                >Részlet</button>
+            <template v-slot:nev> <!-- Módosítás itt -->
+                <p v-html="keresJelol(member.nev)" class="karakter-cim"></p> <!-- Cím slot -->
             </template>
         </G59kartya>
+
+        <!-- Modálisok hozzáadása minden karakterhez -->
+        <G59Info v-if="kivalasztottKarakter" :nev="kivalasztottKarakter.nev" :text="kivalasztottKarakter.text"
+            :modalId="'#g59InfoModal' + kivalasztottKarakter.id" />
     </div>
 </template>
 
 <script>
 import G59kartya from "@/components/G59kartya.vue";
+import G59Info from "@/components/G59Info.vue";
 
 export default {
     components: {
-        G59kartya
+        G59kartya,
+        G59Info,
     },
     inject: ["searchQuery"],
     data() {
@@ -32,82 +33,80 @@ export default {
                     id: 1,
                     nev: "Ruby da Cherry",
                     kep: "Ruby.jpg",
-                    text: "Aristos Petrou vagy Ruby da Cherry a New Orleans-i rapduó $uicideboy$ második fele, és $crim unokatestvére."
+                    text: "Aristos Petrou vagy Ruby da Cherry a New Orleans-i rapduó $uicideboy$ második fele, és $crim unokatestvére.",
                 },
                 {
                     id: 2,
                     nev: "$crim",
                     kep: "Scrim.jpg",
-                    text: "Scott Anthony Arceneaux Jr., szakmai nevén Scrim, amerikai rapper 1989-ben született New Orleansban."
+                    text: "Scott Anthony Arceneaux Jr., szakmai nevén Scrim, amerikai rapper 1989-ben született New Orleansban.",
                 },
                 {
                     id: 3,
                     nev: "Ramirez",
                     kep: "Ramirez.jpg",
-                    text: "1998-ban született a kaliforniai San Franciscóban. Ramirez egy Bay Area-i rapper."
+                    text: "1998-ban született a kaliforniai San Franciscóban. Ramirez egy Bay Area-i rapper.",
                 },
                 {
                     id: 4,
                     nev: "GERM",
                     kep: "Germ.jpg",
-                    text: "Jerry Antoine (született 1991-ben), ismertebb nevén Germ, Georgia állambeli rapper."
+                    text: "Jerry Antoine (született 1991-ben), ismertebb nevén Germ, Georgia állambeli rapper.",
                 },
                 {
                     id: 5,
                     nev: "Night Lovell",
                     kep: "Night Lovell.jpg",
-                    text: "Shermar Paul (born May 29, 1997), known as Night Lovell, is a rapper from Ottawa, Canada."
+                    text: "Shermar Paul (born May 29, 1997), known as Night Lovell, is a rapper from Ottawa, Canada.",
                 },
                 {
                     id: 6,
                     nev: "Shakewell",
                     kep: "Shakewell.jpg",
-                    text: "Andrew Adolph, aka Shakewell, a San Fernando Valley-ből származó amerikai rapper."
+                    text: "Andrew Adolph, aka Shakewell, a San Fernando Valley-ből származó amerikai rapper.",
                 },
                 {
                     id: 7,
                     nev: "Chetta",
                     kep: "Chetta.jpg",
-                    text: "Chetta a Hu$tle Family-hez és a G59-hez kötődő New Orleans-i rapper."
+                    text: "Chetta a Hu$tle Family-hez és a G59-hez kötődő New Orleans-i rapper.",
                 },
                 {
                     id: 8,
                     nev: "Crystalmeth",
                     kep: "CrystalMeth.jpg",
-                    text: "Crystal Meth a $uicideBoy$ producere és DJ-je."
-                }
+                    text: "Crystal Meth a $uicideBoy$ producere és DJ-je.",
+                },
             ],
-            kivalasztottMember: null
-        }
+            kivalasztottKarakter: null,
+        };
     },
     methods: {
         reszletKezelo(id) {
-            this.kivalasztottKarakter = this.G59members.find(member => member.id === id);
-            this.$emit('reszletekModalKezeles', this.kivalasztottKarakter);
-            console.log("Hello");
-            
+            this.kivalasztottKarakter = this.G59members.find((member) => member.id === Number(id)); // Az ID-t számmá konvertáljuk
         },
         keresJelol(text) {
             if (!this.searchQuery) return text;
-
-            const regex = new RegExp(this.searchQuery, 'gi');
-            return text.replace(regex, match => {
+            const regex = new RegExp(this.searchQuery, "gi");
+            return text.replace(regex, (match) => {
                 return `<span class="highlight">${match}</span>`;
-            })
-        }
+            });
+        },
     },
     computed: {
         KeresettMember() {
             if (!this.searchQuery) {
                 return this.G59members; // Az összes kártya megjelenítése
             }
-            return this.G59members.filter(g => {
-                return g.nev.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    g.text.toLowerCase().includes(this.searchQuery.toLowerCase());
+            return this.G59members.filter((g) => {
+                return (
+                    g.nev.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    g.text.toLowerCase().includes(this.searchQuery.toLowerCase())
+                );
             });
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>
@@ -120,19 +119,46 @@ export default {
 .karakter-kartyak {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    /* 4 kártya egy sorban */
     gap: 20px;
     padding: 20px;
     justify-content: center;
-    background-color: #121212;
+    background-color: transparent;
+    /* Háttér eltüntetve */
+}
+
+.karakter-cim {
+    padding: 10px;
+    /* Kisebb padding a címnek */
+    font-weight: 700;
+    font-size: 16px;
+    /* Kisebb méret */
+    font-family: 'Cinzel', serif;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* Kártyák egyéni stílusa */
+.kartya {
+    padding: 10px;
+    /* Padding around each card */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Border for the box */
+    border-radius: 12px;
+    /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Slightly transparent background */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    /* Shadow effect for depth */
 }
 
 /* Üveghatású kártya megjelenés */
 .karakter-kartya {
-    background: rgba(255, 255, 255, 0.1); /* Áttetsző fehér */
-    backdrop-filter: blur(10px); /* Üveghatás (elmosás) */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px; /* Nagyobb lekerekítés */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); /* Erősebb, elmosott árnyék */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     overflow: hidden;
     position: relative;
@@ -148,13 +174,14 @@ export default {
 /* Kép a kártyán (felfelé megnyújtva) */
 .karakter-kep {
     width: 100%;
-    height: 300px; /* Megnövelt magasság a felfelé nyújtáshoz */
-    object-fit: cover; /* A kép kitöltése torzítás nélkül */
+    height: 300px;
+    /* Megnövelt magasság a felfelé nyújtáshoz */
+    object-fit: cover;
+    /* A kép kitöltése torzítás nélkül */
     border-radius: 12px 12px 0 0;
     filter: brightness(0.7);
     transition: filter 0.4s;
 }
-
 
 /* Hover a képen */
 .karakter-kartya:hover .karakter-kep {
@@ -181,27 +208,10 @@ span.highlight {
     border-radius: 4px;
 }
 
-/* Fényhatás hover alatt */
-.karakter-kartya::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.karakter-kartya:hover::after {
-    opacity: 1;
-}
-
 /* Részlet gomb */
 .reszlet-gomb {
-    background: linear-gradient(45deg, #ff0000, #cc0000); /* Piros gradient */
+    background: linear-gradient(45deg, #ff0000, #cc0000);
+    /* Piros gradient */
     color: white;
     border: none;
     padding: 12px 24px;
@@ -217,7 +227,7 @@ span.highlight {
 
 /* Hover-effektus a gombon */
 .reszlet-gomb:hover {
-    background: linear-gradient(45deg, #ff4d4d, #ff0000); /* Világosabb piros hover közben */
+    background: linear-gradient(45deg, #ff4d4d, #ff0000);
     box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
 }
 
@@ -225,19 +235,21 @@ span.highlight {
 @media (max-width: 1200px) {
     .karakter-kartyak {
         grid-template-columns: repeat(3, 1fr);
+        /* 3 kártya egy sorban a kisebb képernyőkön */
     }
 }
 
 @media (max-width: 768px) {
     .karakter-kartyak {
         grid-template-columns: repeat(2, 1fr);
+        /* 2 kártya egy sorban még kisebb képernyőkön */
     }
 }
 
 @media (max-width: 576px) {
     .karakter-kartyak {
         grid-template-columns: 1fr;
+        /* 1 kártya egy sorban a legkisebb képernyőkön */
     }
 }
-
 </style>
