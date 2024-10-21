@@ -3,9 +3,8 @@
     <div class="card">
       <slot name="kep"></slot>
       <div class="card-body">
-        <!-- Név slot elhelyezése a kép és a gomb között -->
         <slot name="nev"></slot>
-        <!-- Dinamikus modális target -->
+        <!-- Use dynamic modal ID here -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#g59InfoModal' + id"
           @click="onClickReszletek">
           Részletek
@@ -20,8 +19,8 @@ export default {
   props: ["id"],
   methods: {
     onClickReszletek() {
-        this.$emit("reszletekModalKezeles", { id: this.id });
+      this.$emit("reszletekModalKezeles", { id: this.id });
     },
-},
+  },
 };
 </script>

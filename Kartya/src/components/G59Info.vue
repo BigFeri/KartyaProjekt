@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" id="g59InfoModal" tabindex="-1" aria-labelledby="reszletekModalKezeles" aria-hidden="true">
+  <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="reszletekModalKezeles" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -10,8 +10,9 @@
           <p>{{ text }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#g59InfoModal' + id">
-            Bezárás</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            Bezárás
+          </button>
         </div>
       </div>
     </div>
@@ -20,6 +21,6 @@
 
 <script>
 export default {
-  props: ["nev", "text", "modalId"], // Átadjuk a karakter nevét, szövegét és a modális ID-ját
+  props: ["nev", "text", "modalId"],
 };
 </script>
