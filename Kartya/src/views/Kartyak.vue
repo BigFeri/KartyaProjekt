@@ -83,15 +83,17 @@ export default {
         };
     },
     methods: {
-        reszletKezelo(id) {
-            this.kivalasztottKarakter = this.G59members.find((member) => member.id === Number(id)); // Az ID-t számmá konvertáljuk
+        reszletKezelo({ id }) {
+            this.kivalasztottKarakter = this.G59members.find(member => member.id === Number(id));
+            // Esetleg logolhatod is, hogy lássad, frissül-e
+            console.log(this.kivalasztottKarakter);
         },
         keresJelol(text) {
             if (!this.searchQuery) return text;
             const regex = new RegExp(this.searchQuery, "gi");
             return text.replace(regex, (match) => {
                 return `<span class="highlight">${match}</span>`;
-            });npm
+            }); npm
         },
     },
     computed: {

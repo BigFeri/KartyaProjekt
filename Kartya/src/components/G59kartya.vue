@@ -20,8 +20,8 @@ export default {
   props: ["id"],
   methods: {
     onClickReszletek() {
-      this.$emit("reszletekModalKezeles", { id: this.id });
+        this.$emit("reszletekModalKezeles", { id: this.id });
     },
-  }
+},
 };
 </script>
