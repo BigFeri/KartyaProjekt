@@ -1,6 +1,6 @@
 <template>
 
-    <div class="karakter-kartyak">
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 karakter-kartyak">
         <G59kartya v-for="member in KeresettMember" :key="member.id" :id="member.id"
             @reszletekModalKezeles="reszletKezelo" class="kartya">
             <template v-slot:kep>
@@ -85,8 +85,6 @@ export default {
     methods: {
         reszletKezelo({ id }) {
         this.kivalasztottKarakter = this.G59members.find(member => member.id === Number(id));
-        // Esetleg logolhatod is, hogy lássad, frissül-e
-        console.log(this.kivalasztottKarakter);
     },
         keresJelol(text) {
             if (!this.searchQuery) return text;
