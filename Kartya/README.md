@@ -28,6 +28,56 @@ npm run dev
 npm run build
 ```
 
+ G59members: [
+                {
+                    id: 1,
+                    nev: "Ruby da Cherry",
+                    kep: "Ruby.jpg",
+                    text: "Aristos Petrou vagy Ruby da Cherry a New Orleans-i rapduó $uicideboy$ második fele, és $crim unokatestvére.",
+                },
+                {
+                    id: 2,
+                    nev: "$crim",
+                    kep: "Scrim.jpg",
+                    text: "Scott Anthony Arceneaux Jr., szakmai nevén Scrim, amerikai rapper 1989-ben született New Orleansban.",
+                },
+                {
+                    id: 3,
+                    nev: "Ramirez",
+                    kep: "Ramirez.jpg",
+                    text: "1998-ban született a kaliforniai San Franciscóban. Ramirez egy Bay Area-i rapper.",
+                },
+                {
+                    id: 4,
+                    nev: "GERM",
+                    kep: "Germ.jpg",
+                    text: "Jerry Antoine (született 1991-ben), ismertebb nevén Germ, Georgia állambeli rapper.",
+                },
+                {
+                    id: 5,
+                    nev: "Night Lovell",
+                    kep: "Night Lovell.jpg",
+                    text: "Shermar Paul (born May 29, 1997), known as Night Lovell, is a rapper from Ottawa, Canada.",
+                },
+                {
+                    id: 6,
+                    nev: "Shakewell",
+                    kep: "Shakewell.jpg",
+                    text: "Andrew Adolph, aka Shakewell, a San Fernando Valley-ből származó amerikai rapper.",
+                },
+                {
+                    id: 7,
+                    nev: "Chetta",
+                    kep: "Chetta.jpg",
+                    text: "Chetta a Hu$tle Family-hez és a G59-hez kötődő New Orleans-i rapper.",
+                },
+                {
+                    id: 8,
+                    nev: "Crystalmeth",
+                    kep: "CrystalMeth.jpg",
+                    text: "Crystal Meth a $uicideBoy$ producere és DJ-je.",
+                },
+            ],
 
 
 # Kártya Projekt, feladat leírása
