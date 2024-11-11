@@ -52,7 +52,7 @@ export default {
           <div class="navbar-links">
             <RouterLink to="/">Home</RouterLink> |
             <RouterLink to="/tablazat">Táblázat</RouterLink> |
-            <RouterLink to="/kartyak">Kártyák</RouterLink>
+            <RouterLink to="/kartyak">Kártyák</RouterLink> |
           </div>
 
           <div v-if="!isHomePage" class="d-flex align-items-center search-container" role="search">

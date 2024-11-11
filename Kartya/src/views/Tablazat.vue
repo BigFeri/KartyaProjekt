@@ -1,171 +1,169 @@
 <template>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="table-container">
-                <table class="table col-md-8">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Név</th>
-                            <th scope="col">Allias</th>
-                            <th scope="col">Banda</th>
-                            <th scope="col">Foglalkozás</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(member, i) in filteredCharacters" :key="i">
-                            <th scope="row" class="hover-cell">{{ member.id }}</th>
-                            <td class="hover-cell">{{ member.nev }}</td>
-                            <td class="hover-cell">{{ member.allias }}</td>
-                            <td class="hover-cell">{{ member.band }}</td>
-                            <td class="hover-cell">{{ member.foglalkozas }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="table-container">
+        <table class="table col-md-8">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Kép</th>
+              <th scope="col">Név</th>
+              <th scope="col">Allias</th>
+              <th scope="col">Banda</th>
+              <th scope="col">Foglalkozás</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(member, i) in filteredCharacters" :key="i">
+              <th scope="row" class="hover-cell">{{ member.id }}</th>
+              <td class="hover-cell">
+                <img :src="`../../public/${member.kep}`" :alt="`Kép: ${member.nev}`" class="hover-img">
+              </td>
+              <td class="hover-cell">{{ member.nev }}</td>
+              <td class="hover-cell">{{ member.allias }}</td>
+              <td class="hover-cell">{{ member.band }}</td>
+              <td class="hover-cell">{{ member.foglalkozas }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    inject: ['searchQuery'],
-    data() {
-        return {
-            G59members: [
-                { id: 1, nev: "Aristos Petrou", allias: "Ruby da Cherry", band: "$uicideboy$", foglalkozas: "Zenész" },
-                { id: 2, nev: "Scott Anthony Arceneaux Jr.", allias: "$crim", band: "$uicideboy$", foglalkozas: "Zenész/Producer" },
-                { id: 3, nev: "Ivan Ramirez", allias: "Ramirez", band: "-", foglalkozas: "Zenész" },
-                { id: 4, nev: "Jerry Antoine", allias: "GERM", band: "Shameless Money Gang", foglalkozas: "Zenész" },
-                { id: 5, nev: "Shermar Cuba Paul", allias: "Night Lovell", band: "-", foglalkozas: "Zenész/Producer" },
-                { id: 6, nev: "Andrew Adolph", allias: "Shakewell", band: "-", foglalkozas: "Zenész" },
-                { id: 7, nev: "Joshua Marchetta", allias: "Chetta", band: "-", foglalkozas: "Zenész" },
-                { id: 8, nev: "-", allias: "Crystalmeth", band: "-", foglalkozas: "DJ" },
-                { id: 9, nev: "Max Beck", allias: "-", band: "-", foglalkozas: "Fotós" },
-                { id: 10, nev: "Adam Mariagga", allias: "-", band: "-", foglalkozas: "Ruha tervező" },
-            ],
-        };
+  inject: ['searchQuery'],
+  data() {
+    return {
+      G59members: [
+        { id: 1, kep: "Ruby.jpg", nev: "Aristos Petrou", allias: "Ruby da Cherry", band: "$uicideboy$", foglalkozas: "Zenész" },
+        { id: 2, kep: "Scrim.jpg", nev: "Scott Anthony Arceneaux Jr.", allias: "$crim", band: "$uicideboy$", foglalkozas: "Zenész/Producer" },
+        { id: 3, kep: "Ramirez.jpg", nev: "Ivan Ramirez", allias: "Ramirez", band: "-", foglalkozas: "Zenész" },
+        { id: 4, kep: "Germ.jpg", nev: "Jerry Antoine", allias: "GERM", band: "Shameless Money Gang", foglalkozas: "Zenész" },
+        { id: 5, kep: "Night Lovell.jpg", nev: "Shermar Cuba Paul", allias: "Night Lovell", band: "-", foglalkozas: "Zenész/Producer" },
+        { id: 6, kep: "Shakewell.jpg", nev: "Andrew Adolph", allias: "Shakewell", band: "-", foglalkozas: "Zenész" },
+        { id: 7, kep: "Chetta.jpg", nev: "Joshua Marchetta", allias: "Chetta", band: "-", foglalkozas: "Zenész" },
+        { id: 8, kep: "CrystalMeth.jpg", nev: "-", allias: "Crystalmeth", band: "-", foglalkozas: "DJ" },
+        { id: 9, kep: "Max.jpg", nev: "Max Beck", allias: "-", band: "-", foglalkozas: "Fotós" },
+        { id: 10, kep: "charizard.jpg", nev: "Adam Mariagga", allias: "-", band: "-", foglalkozas: "Ruha tervező" },
+      ],
+    };
+  },
+  computed: {
+    filteredCharacters() {
+      const searchTarget = this.searchQuery ? this.searchQuery.toLowerCase() : "";
+      return this.G59members.filter((member) => {
+        return (
+          member.nev.toLowerCase().includes(searchTarget) ||
+          member.allias.toLowerCase().includes(searchTarget) ||
+          member.band.toLowerCase().includes(searchTarget) ||
+          member.foglalkozas.toLowerCase().includes(searchTarget)
+        );
+      });
     },
-    computed: {
-        filteredCharacters() {
-            const searchTarget = this.searchQuery ? this.searchQuery.toLowerCase() : "";
-            return this.G59members.filter((member) => {
-                return (
-                    member.nev.toLowerCase().includes(searchTarget) ||
-                    member.allias.toLowerCase().includes(searchTarget) ||
-                    member.band.toLowerCase().includes(searchTarget) ||
-                    member.foglalkozas.toLowerCase().includes(searchTarget)
-                );
-            });
-        },
-    },
+  },
 };
 </script>
 
 <style scoped>
 .suicideboy-theme {
-  background-color: #121212; /* Nagyon sötét háttér */
-  color: #e0e0e0; /* Világosszürke szöveg */
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 .table {
-  border: 3px solid rgba(0, 188, 212, 1); /* Kezdő szín */
-  border-collapse: collapse; /* Gaps eltávolítása */
-  border-radius: 8px; /* Kerekebb sarkok */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Árnyék */
-  overflow: hidden; /* Túlfolyás elrejtése */
-  width: 100%; /* Táblázat szélessége */
-  max-width: 800px; /* Maximális szélesség */
-  margin: auto; /* Középre igazítás */
-}
-
-.hover-cell {
-  position: relative; /* Pozicionálás a sárkányhoz */
-}
-
-.dragon {
-  display: none; /* Alapértelmezetten rejtett */
-  position: absolute;
-  width: 30px; /* Sárkány mérete */
-  height: 30px; /* Sárkány mérete */
-  background-image: url('sarkany.jpg'); /* Sárkány kép URL-je */
-  background-size: cover; /* Kép méretezése */
-  top: 0; /* Fentről igazítva */
-  left: 0; /* Balról igazítva */
-}
-
-.hover-cell:hover .dragon {
-  display: block; /* Megjeleníti a sárkányt hoverkor */
+  border: 3px solid rgba(0, 188, 212, 1);
+  border-collapse: collapse;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  table-layout: fixed;
+  /* Fix szélesség a cellákhoz */
 }
 
 th,
 td {
-  padding: 10px; /* Csökkentett párnázás */
-  border: 1px solid #444; /* Sötétebb szürke keret a cellákban */
-  background-color: #2e2e2e; /* Sötétebb háttér a cellákhoz */
-  color: #e0e0e0; /* Világosszürke szöveg */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Zökkenőmentes háttérváltozás */
+  padding: 20px;
+  font-size: 1.2rem;
+  border: 1px solid #444;
+  background-color: #2e2e2e;
+  color: #e0e0e0;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 th {
-  text-align: left; /* Balra igazítás */
+  text-align: left;
 }
 
-/* Grunge/distressed effektus a táblázat fejlécén */
-.table thead th {
-  background-color: #3a3a3a; /* Sötétebb háttér a fejlécnek */
-  color: #ffcc00; /* Aranysárga szöveg a fejlécnek */
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Erősebb árnyék */
+td {
+  text-align: center;
+  position: relative;
+  /* A pozicionáláshoz szükséges, hogy a képeket belül helyezzük el */
 }
 
-/* Hover hatások */
+td img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* A kép szélessége kitölti a cellát */
+  height: 100%;
+  /* A kép magassága kitölti a cellát */
+  object-fit: cover;
+  /* A kép kitölti a cellát, miközben megőrzi az arányait */
+  object-position: center;
+  /* A kép középen lesz igazítva */
+  opacity: 0;
+  /* Alapértelmezetten rejtve */
+  transition: opacity 0.3s ease;
+  /* A képek alapértelmezetten rejtve lesznek */
+}
+
+/* Hoverkor jelenik meg a kép */
+.hover-cell:hover img {
+  opacity: 1;
+  /* A kép csak akkor lesz látható, amikor az egér a cella fölé kerül */
+}
+
+/* Elvetettük a táblázat háttérszínének változtatását hoverkor */
 .table tbody tr:hover td,
 .table tbody tr:hover th {
-  color: #00bcd4; /* Élénk kék hover szöveg */
-  background-color: rgba(0, 188, 212, 0.2); /* Halvány kék háttér hoverkor */
-  transform: scale(1.02); /* Enyhe nagyítás hoverkor */
+  color: #00bcd4;
+  /* Az egér fölé vitt sorok szövege világoskék */
 }
 
-/* Zökkenőmentes görgetés a táblázathoz */
+.table thead th {
+  background-color: #3a3a3a;
+  color: #ffcc00;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
 .table tbody {
-  max-height: 250px; /* Csökkentett magasság */
-  overflow-y: auto; /* Függőleges görgetés engedélyezése */
-  scrollbar-width: thin; /* Vékony görgetősáv */
-  scrollbar-color: #00bcd4 #121212; /* Görgetősáv színek */
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00bcd4 #121212;
 }
 
-/* Custom scrollbar for webkit browsers */
 .table::-webkit-scrollbar {
-  width: 8px; /* Görgetősáv szélessége */
+  width: 8px;
 }
 
 .table::-webkit-scrollbar-track {
-  background: #1c1c1c; /* Háttér a görgetősáv számára */
+  background: #1c1c1c;
 }
 
 .table::-webkit-scrollbar-thumb {
-  background-color: #00bcd4; /* Görgetősáv színe */
-  border-radius: 10px; /* Lekerekített szélek */
+  background-color: #00bcd4;
+  border-radius: 10px;
 }
 
 .table::-webkit-scrollbar-thumb:hover {
-  background-color: #0097a7; /* Hover hatásra sötétebb kék */
-}
-
-/* Animált szöveg effektus */
-th::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  background: #ffcc00; /* Aranysárga vonal */
-  bottom: 0;
-  left: 0;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-th:hover::after {
-  transform: scaleX(1); /* Hoverkor megjelenik */
+  background-color: #0097a7;
 }
 </style>
