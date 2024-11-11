@@ -2,34 +2,33 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="table-container">
-        <table class="table col-md-8">
-          <thead>
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Kép</th>
-              <th scope="col">Név</th>
-              <th scope="col">Allias</th>
-              <th scope="col">Banda</th>
-              <th scope="col">Foglalkozás</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(member, i) in filteredCharacters" :key="i">
-              <th scope="row" class="hover-cell">{{ member.id }}</th>
-              <td class="hover-cell">
-                <img :src="`../../public/${member.kep}`" :alt="`Kép: ${member.nev}`" class="hover-img">
-              </td>
-              <td class="hover-cell">{{ member.nev }}</td>
-              <td class="hover-cell">{{ member.allias }}</td>
-              <td class="hover-cell">{{ member.band }}</td>
-              <td class="hover-cell">{{ member.foglalkozas }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Flexbox alapú táblázat -->
+        <div class="flex-table">
+          <div class="table-row" v-for="(member, i) in filteredCharacters" :key="i">
+          
+            <div class="table-cell">
+              <strong></strong>
+              <img :src="`../../public/${member.kep}`" :alt="`Kép: ${member.nev}`" class="hover-img">
+            </div>
+            <div class="table-cell">
+              <strong>Név:</strong> {{ member.nev }}
+            </div>
+            <div class="table-cell">
+              <strong>Allias:</strong> {{ member.allias }}
+            </div>
+            <div class="table-cell">
+              <strong>Banda:</strong> {{ member.band }}
+            </div>
+            <div class="table-cell">
+              <strong>Foglalkozás:</strong> {{ member.foglalkozas }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -67,103 +66,68 @@ export default {
 </script>
 
 <style scoped>
-.suicideboy-theme {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-.table {
-  border: 3px solid rgba(0, 188, 212, 1);
-  border-collapse: collapse;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
+.table-container {
   width: 100%;
   max-width: 1000px;
   margin: auto;
-  table-layout: fixed;
-  /* Fix szélesség a cellákhoz */
+  padding: 20px;
 }
 
-th,
-td {
-  padding: 20px;
-  font-size: 1.2rem;
-  border: 1px solid #444;
+.flex-table {
+  display: flex;
+  flex-wrap: wrap;
+  /* A sorokba töltjük ki az elemeket */
+  gap: 20px;
+  /* Két cella közötti távolság */
+  justify-content: center;
+}
+
+.table-row {
+  display: flex;
+  width: 100%;
+  flex-basis: calc(50% - 10px);
+  /* Két oszlopra osztja a szélességet */
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.table-cell {
+  flex-basis: 48%;
+  /* Az egyes cellák szélessége */
   background-color: #2e2e2e;
   color: #e0e0e0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
+  font-size: 1.1rem;
   transition: background-color 0.3s ease;
 }
 
-th {
-  text-align: left;
-}
-
-td {
-  text-align: center;
-  position: relative;
-  /* A pozicionáláshoz szükséges, hogy a képeket belül helyezzük el */
-}
-
-td img {
-  position: absolute;
-  top: 0;
-  left: 0;
+.table-cell img {
   width: 100%;
-  /* A kép szélessége kitölti a cellát */
-  height: 100%;
-  /* A kép magassága kitölti a cellát */
-  object-fit: cover;
-  /* A kép kitölti a cellát, miközben megőrzi az arányait */
-  object-position: center;
-  /* A kép középen lesz igazítva */
+  height: auto;
+  border-radius: 5px;
   opacity: 0;
-  /* Alapértelmezetten rejtve */
   transition: opacity 0.3s ease;
-  /* A képek alapértelmezetten rejtve lesznek */
 }
 
-/* Hoverkor jelenik meg a kép */
-.hover-cell:hover img {
+.table-row:hover .table-cell img {
   opacity: 1;
-  /* A kép csak akkor lesz látható, amikor az egér a cella fölé kerül */
 }
 
-/* Elvetettük a táblázat háttérszínének változtatását hoverkor */
-.table tbody tr:hover td,
-.table tbody tr:hover th {
-  color: #00bcd4;
-  /* Az egér fölé vitt sorok szövege világoskék */
+.table-cell:hover {
+  background-color: #444;
 }
 
-.table thead th {
-  background-color: #3a3a3a;
-  color: #ffcc00;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+.table-cell strong {
+  display: block;
+  font-weight: bold;
 }
 
-.table tbody {
-  max-height: 300px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #00bcd4 #121212;
-}
-
-.table::-webkit-scrollbar {
-  width: 8px;
-}
-
-.table::-webkit-scrollbar-track {
-  background: #1c1c1c;
-}
-
-.table::-webkit-scrollbar-thumb {
-  background-color: #00bcd4;
-  border-radius: 10px;
-}
-
-.table::-webkit-scrollbar-thumb:hover {
-  background-color: #0097a7;
+@media (max-width: 768px) {
+  .table-row {
+    flex-basis: 100%;
+  }
 }
 </style>
