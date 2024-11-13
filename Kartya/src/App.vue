@@ -5,6 +5,10 @@
         <div class="box-content">
           <h1>Kártya Projekt</h1>
           <nav class="navbar">
+            <!-- Zenelejátszó és vezérlők a jobb oldalon -->
+            <div class="music-controls">
+              <MusicPlayer />
+            </div>
             <!-- Navigációs linkek -->
             <div class="navbar-links">
               <RouterLink to="/">Home</RouterLink> |
@@ -12,10 +16,13 @@
               <RouterLink to="/kartyak">Kártyák</RouterLink> |
             </div>
 
-            <!-- Zenelejátszó és vezérlők a jobb oldalon -->
-            <div class="music-controls">
-              <MusicPlayer />
-            </div>
+            
+            <div v-if="!isHomePage" class="d-flex align-items-center search-container" role="search">
+            <label for="searchQuery" class="form-label text-nowrap m-0 search-label"></label>
+            <input id="searchQuery" class="form-control me-2 ms-2 search-input" type="search" aria-label="Search"
+              v-model="searchQueryInput" @keyup.enter="performSearch" />
+            <button class="btn btn-outline-danger search-button" type="submit" @click="performSearch">Search</button>
+          </div>
           </nav>
         </div>
       </div>
@@ -29,12 +36,51 @@
 
 <script>
 import { RouterLink, RouterView } from "vue-router";
+import { computed } from "vue";
 import MusicPlayer from './components/Music.vue'; // Importáljuk a MusicPlayer komponenst
+
 
 export default {
   components: {
     MusicPlayer,
   },
+  provide() {
+    return {
+      searchQuery: computed(() => this.searchQuery),
+    };
+  },
+  watch: {
+    searchWordInput(data) {
+      if (!data) {
+        this.searchQuery = null;
+      } else {
+        this.searchQuery = data;
+      }
+    },
+    searchQueryInput(newValue) {
+      if (!newValue) {
+        this.searchQuery = null;
+      } else {
+        this.searchQuery = newValue;
+      }
+    }
+  },
+  data() {
+    return {
+      searchQuery: null,
+      searchQueryInput: null,
+    };
+  },
+  computed: {
+    isHomePage() {
+      return this.$route.path === "/";
+    }
+  },
+  methods: {
+    performSearch() {
+      this.searchQuery = this.searchQueryInput;
+    }
+  }
 };
 </script>
 

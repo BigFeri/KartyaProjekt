@@ -9,6 +9,14 @@ A Kártya Projekt egy interaktív alkalmazás, amely lehetővé teszi a felhaszn
 - Adatbázis: A projektben nem használtunk külső
 
 ## Menüpontok, funkciók
+
+import MusicPlayer from './components/Music.vue'; // Importáljuk a MusicPlayer komponenst
+
+export default {
+  components: {
+    MusicPlayer,
+  },
+};
 ### Home
 Főoldal, amely tartalmazza a navigációs sávot és az aloldalakra mutató linkeket.
 
