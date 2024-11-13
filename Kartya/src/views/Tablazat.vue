@@ -5,16 +5,16 @@
         <!-- Flexbox alapú táblázat -->
         <div class="flex-table">
           <div class="table-row" v-for="(member, i) in filteredCharacters" :key="i">
-          
+
             <div class="table-cell">
-              <strong></strong>
+              <strong>Név:</strong> {{ member.nev }}
+              <p></p>
               <img :src="`../../public/${member.kep}`" :alt="`Kép: ${member.nev}`" class="hover-img">
             </div>
             <div class="table-cell">
-              <strong>Név:</strong> {{ member.nev }}
-            </div>
-            <div class="table-cell">
               <strong>Allias:</strong> {{ member.allias }}
+              <p></p>
+              <img src="../../public/g59s.jpg" alt="">
             </div>
             <div class="table-cell">
               <strong>Banda:</strong> {{ member.band }}
@@ -36,16 +36,16 @@ export default {
   data() {
     return {
       G59members: [
-        { id: 1, kep: "Ruby.jpg", nev: "Aristos Petrou", allias: "Ruby da Cherry", band: "$uicideboy$", foglalkozas: "Zenész" },
-        { id: 2, kep: "Scrim.jpg", nev: "Scott Anthony Arceneaux Jr.", allias: "$crim", band: "$uicideboy$", foglalkozas: "Zenész/Producer" },
-        { id: 3, kep: "Ramirez.jpg", nev: "Ivan Ramirez", allias: "Ramirez", band: "-", foglalkozas: "Zenész" },
-        { id: 4, kep: "Germ.jpg", nev: "Jerry Antoine", allias: "GERM", band: "Shameless Money Gang", foglalkozas: "Zenész" },
-        { id: 5, kep: "Night Lovell.jpg", nev: "Shermar Cuba Paul", allias: "Night Lovell", band: "-", foglalkozas: "Zenész/Producer" },
-        { id: 6, kep: "Shakewell.jpg", nev: "Andrew Adolph", allias: "Shakewell", band: "-", foglalkozas: "Zenész" },
-        { id: 7, kep: "Chetta.jpg", nev: "Joshua Marchetta", allias: "Chetta", band: "-", foglalkozas: "Zenész" },
-        { id: 8, kep: "CrystalMeth.jpg", nev: "-", allias: "Crystalmeth", band: "-", foglalkozas: "DJ" },
-        { id: 9, kep: "Max.jpg", nev: "Max Beck", allias: "-", band: "-", foglalkozas: "Fotós" },
-        { id: 10, kep: "charizard.jpg", nev: "Adam Mariagga", allias: "-", band: "-", foglalkozas: "Ruha tervező" },
+        { id: 1, kep: "Ruby.jpg", kep2: "g59s.jpg", nev: "Aristos Petrou", allias: "Ruby da Cherry", band: "$uicideboy$", foglalkozas: "Zenész" },
+        { id: 2, kep: "Scrim.jpg", kep2: "g59s.jpg", nev: "Scott Anthony Arceneaux Jr.", allias: "$crim", band: "$uicideboy$", foglalkozas: "Zenész/Producer" },
+        { id: 3, kep: "Ramirez.jpg", kep2: "g59s.jpg", nev: "Ivan Ramirez", allias: "Ramirez", band: "-", foglalkozas: "Zenész" },
+        { id: 4, kep: "Germ.jpg", kep2: "g59s.jpg", nev: "Jerry Antoine", allias: "GERM", band: "Shameless Money Gang", foglalkozas: "Zenész" },
+        { id: 5, kep: "Night Lovell.jpg", kep2: "g59s.jpg", nev: "Shermar Cuba Paul", allias: "Night Lovell", band: "-", foglalkozas: "Zenész/Producer" },
+        { id: 6, kep: "Shakewell.jpg", kep2: "g59s.jpg", nev: "Andrew Adolph", allias: "Shakewell", band: "-", foglalkozas: "Zenész" },
+        { id: 7, kep: "Chetta.jpg", kep2: "g59s.jpg", nev: "Joshua Marchetta", allias: "Chetta", band: "-", foglalkozas: "Zenész" },
+        { id: 8, kep: "CrystalMeth.jpg", kep2: "g59s.jpg", nev: "-", allias: "Crystalmeth", band: "-", foglalkozas: "DJ" },
+        { id: 9, kep: "Max.jpg", kep2: "g59s.jpg", nev: "Max Beck", allias: "-", band: "-", foglalkozas: "Fotós" },
+        { id: 10, kep: "charizard.jpg", kep2: "g59s.jpg", nev: "Adam Mariagga", allias: "-", band: "-", foglalkozas: "Ruha tervező" },
       ],
     };
   },

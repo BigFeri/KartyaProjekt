@@ -1,78 +1,44 @@
-<script>
-import { RouterLink, RouterView } from "vue-router";
-import { computed } from "vue";
-
-export default {
-  provide() {
-    return {
-      searchQuery: computed(() => this.searchQuery),
-    };
-  },
-  watch: {
-    searchWordInput(data) {
-      if (!data) {
-        this.searchQuery = null;
-      } else {
-        this.searchQuery = data;
-      }
-    },
-    searchQueryInput(newValue) {
-      if (!newValue) {
-        this.searchQuery = null;
-      } else {
-        this.searchQuery = newValue;
-      }
-    }
-  },
-  data() {
-    return {
-      searchQuery: null,
-      searchQueryInput: null,
-    };
-  },
-  computed: {
-    isHomePage() {
-      return this.$route.path === "/";
-    }
-  },
-  methods: {
-    performSearch() {
-      this.searchQuery = this.searchQueryInput;
-    }
-  }
-};
-</script>
-
 <template>
-  <header>
-    <div class="suicideboys-box">
-      <div class="box-content">
-        <h1>Kártya Projekt</h1>
-        <nav>
-          <div class="navbar-links">
-            <RouterLink to="/">Home</RouterLink> |
-            <RouterLink to="/tablazat">Táblázat</RouterLink> |
-            <RouterLink to="/kartyak">Kártyák</RouterLink> |
-          </div>
+  <div>
+    <header>
+      <div class="suicideboys-box">
+        <div class="box-content">
+          <h1>Kártya Projekt</h1>
+          <nav class="navbar">
+            <!-- Navigációs linkek -->
+            <div class="navbar-links">
+              <RouterLink to="/">Home</RouterLink> |
+              <RouterLink to="/tablazat">Táblázat</RouterLink> |
+              <RouterLink to="/kartyak">Kártyák</RouterLink> |
+            </div>
 
-          <div v-if="!isHomePage" class="d-flex align-items-center search-container" role="search">
-            <label for="searchQuery" class="form-label text-nowrap m-0 search-label"></label>
-            <input id="searchQuery" class="form-control me-2 ms-2 search-input" type="search" aria-label="Search"
-              v-model="searchQueryInput" @keyup.enter="performSearch" />
-            <button class="btn btn-outline-danger search-button" type="submit" @click="performSearch">Search</button>
-          </div>
-        </nav>
+            <!-- Zenelejátszó és vezérlők a jobb oldalon -->
+            <div class="music-controls">
+              <MusicPlayer />
+            </div>
+          </nav>
+        </div>
       </div>
+    </header>
+
+    <div class="my-border p-3">
+      <RouterView />
     </div>
-  </header>
-  <div class="my-border p-3">
-    <RouterView />
   </div>
 </template>
 
+<script>
+import { RouterLink, RouterView } from "vue-router";
+import MusicPlayer from './components/Music.vue'; // Importáljuk a MusicPlayer komponenst
+
+export default {
+  components: {
+    MusicPlayer,
+  },
+};
+</script>
 
 <style scoped>
-/* Global styles */
 /* Global styles */
 body {
   color: #ffffff;
@@ -103,7 +69,16 @@ h1 {
 }
 
 /* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .navbar-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
   margin-top: 10px;
 }
 
@@ -118,17 +93,35 @@ h1 {
   color: #ff4757;
 }
 
-/* Keresősáv és header reszponzív megjelenítés */
-.search-container {
-  margin-top: 20px;
+/* Zenelejátszó vezérlők elhelyezése a jobb oldalon */
+.music-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.search-input {
-  width: 250px;
+/* Zenelejátszó vezérlő gombok */
+.music-controls button {
+  background: none;
+  border: none;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
 }
 
-.search-button {
-  padding: 6px 12px;
+.music-controls button:hover {
+  color: #ff4757;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume-control input {
+  width: 100px;
 }
 
 /* Reszponzív stílusok kisebb képernyőkre */
@@ -152,23 +145,15 @@ h1 {
     padding: 8px 0;
   }
 
-  .search-container {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 15px;
+  .music-controls {
+    gap: 10px;
   }
 
-  .search-input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .search-button {
-    width: 100%;
+  .volume-control input {
+    width: 80px;
   }
 }
 
-/* Reszponzív stílusok nagyon kis képernyőkre */
 @media (max-width: 576px) {
   h1 {
     font-size: 1.5em;
@@ -178,13 +163,9 @@ h1 {
     font-size: 0.9em;
   }
 
-  .search-input {
-    width: 100%;
-  }
-
-  .search-button {
-    width: 100%;
-    padding: 8px;
+  .music-controls button {
+    font-size: 1.2rem;
+    /* Kisebb ikonok mobilon */
   }
 }
 </style>
