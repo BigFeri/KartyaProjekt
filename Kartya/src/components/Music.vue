@@ -1,7 +1,7 @@
 <template>
   <div class="music-player">
     <!-- Audio elem -->
-    <audio ref="audio" :src="audioSrc" :loop="true" :muted="muted" />
+    <audio ref="audio" :src="audioSrc" :loop="true" :muted="muted" autoplay />
 
     <div class="music-controls">
       <!-- Play/Pause gomb ikon -->
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       isPlaying: false, // Kezdetben nem játszódik a zene
-      muted: false, // Alapértelmezés szerint nem némított
+      muted: true, // Kezdetben némított
       volume: 1, // Kezdeti hangerő (maximális)
       audioSrc: '/public/Zene/Genesis.mp3', // Zene fájl elérési útja
       volumeInterval: null, // Interval a hangerő folyamatos változtatásához
@@ -115,6 +115,8 @@ export default {
 
     if (isPlaying) {
       this.$refs.audio.play();
+    } else {
+      this.isPlaying = false;
     }
   },
   beforeDestroy() {

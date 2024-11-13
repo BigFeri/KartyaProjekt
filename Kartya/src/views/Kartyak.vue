@@ -1,13 +1,8 @@
 <template>
   <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 karakter-kartyak">
     <!-- Karakterek megjelenítése -->
-    <G59kartya
-      v-for="member in KeresettMember"
-      :key="member.id"
-      :id="member.id"
-      @reszletekModalKezeles="reszletKezelo"
-      class="kartya"
-    >
+    <G59kartya v-for="member in KeresettMember" :key="member.id" :id="member.id" @reszletekModalKezeles="reszletKezelo"
+      class="kartya">
       <!-- Kép és név slotok -->
       <template v-slot:kep>
         <img :src="member.kep" :alt="member.nev" class="karakter-kep" />
@@ -19,15 +14,11 @@
   </div>
 
   <!-- Modális ablak megjelenítése a kiválasztott karakterhez -->
-  <G59Info
-    v-if="kivalasztottKarakter"
-    :nev="kivalasztottKarakter.nev"
-    :text="kivalasztottKarakter.text"
-    :modalId="'g59InfoModal' + kivalasztottKarakter.id"
-  />
+  <G59Info v-if="kivalasztottKarakter" :nev="kivalasztottKarakter.nev" :text="kivalasztottKarakter.text"
+    :modalId="'g59InfoModal' + kivalasztottKarakter.id" />
 </template>
-  
-  <script>
+
+<script>
 import G59kartya from "@/components/G59kartya.vue";
 import G59Info from "@/components/G59Info.vue";
 
@@ -122,82 +113,98 @@ export default {
   },
 };
 </script>
-  
+
 
 <style scoped>
-  /* Karakterkártyák grid elrendezése */
+/* Karakterkártyák grid elrendezése */
+.karakter-kartyak {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 oszlop nagyobb kijelzőkön */
+  grid-gap: 20px;
+  /* Távolság a kártyák között */
+  padding: 20px;
+}
+
+/* Kártyák stílusa */
+.kartya {
+  /* A háttér eltávolítva */
+  /* background-color: #1a1a1a; */
+  border-radius: 10px;
+  /* Kerekített sarkok */
+  overflow: hidden;
+  padding: 15px;
+  /* Az árnyék eltávolítva */
+  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7); */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 400px;
+  /* Kártyák fix magassága */
+  width: 280px;
+  /* Kártyák fix szélessége */
+}
+
+/* A képek méretének egységesítése */
+.karakter-kep {
+  width: 100%;
+  height: 220px;
+  /* Azonos magasság minden képhez */
+  object-fit: cover;
+  /* Kép illeszkedjen a kerethez, torzulás nélkül */
+  border-radius: 8px;
+  /* Kép sarkainak kerekítése */
+}
+
+/* A karakter neve középre igazítva */
+.karakter-cim {
+  color: #ff4d4d;
+  /* $uicideboy$-stílusú piros szín */
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Gomb stílusa és középre helyezése */
+button {
+  background-color: #ff4d4d;
+  /* $uicideboy$ piros szín */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: auto;
+  /* A gombot az aljára tolja */
+}
+
+button:hover {
+  background-color: #ff1a1a;
+  /* Hover effektus */
+}
+
+/* Reszponzív elrendezés: mobilon 1 oszlop, tableten 2, laptopon 4 */
+@media (max-width: 1200px) {
   .karakter-kartyak {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 oszlop nagyobb kijelzőkön */
-    grid-gap: 20px; /* Távolság a kártyák között */
-    padding: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 oszlop laptopon */
   }
+}
 
-  /* Kártyák stílusa */
-  .kartya {
-    background-color: #1a1a1a; /* Sötét háttér a kártyáknak */
-    border-radius: 10px; /* Kerekített sarkok */
-    overflow: hidden;
-    padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7); /* Árnyék a kártyák körül */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 400px; /* Kártyák fix magassága */
-    border: 5px solid #ff4d4d; /* Piros szegély */
-    width: 280px; /* Kártyák fix szélessége */
+@media (max-width: 992px) {
+  .karakter-kartyak {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 oszlop tableten */
   }
+}
 
-  /* A képek méretének egységesítése */
-  .karakter-kep {
-    width: 100%;
-    height: 220px; /* Azonos magasság minden képhez */
-    object-fit: cover; /* Kép illeszkedjen a kerethez, torzulás nélkül */
-    border-radius: 8px; /* Kép sarkainak kerekítése */
+@media (max-width: 576px) {
+  .karakter-kartyak {
+    grid-template-columns: 1fr;
+    /* 1 oszlop mobilon */
   }
-
-  /* A karakter neve középre igazítva */
-  .karakter-cim {
-    color: #ff4d4d; /* $uicideboy$-stílusú piros szín */
-    font-weight: bold;
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  /* Gomb stílusa és középre helyezése */
-  button {
-    background-color: #ff4d4d;  /* $uicideboy$ piros szín */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: auto; /* A gombot az aljára tolja */
-  }
-
-  button:hover {
-    background-color: #ff1a1a; /* Hover effektus */
-  }
-
-  /* Reszponzív elrendezés: mobilon 1 oszlop, tableten 2, laptopon 4 */
-  @media (max-width: 1200px) {
-    .karakter-kartyak {
-      grid-template-columns: repeat(3, 1fr); /* 3 oszlop laptopon */
-    }
-  }
-
-  @media (max-width: 992px) {
-    .karakter-kartyak {
-      grid-template-columns: repeat(2, 1fr); /* 2 oszlop tableten */
-    }
-  }
-
-  @media (max-width: 576px) {
-    .karakter-kartyak {
-      grid-template-columns: 1fr; /* 1 oszlop mobilon */
-    }
-  }
+}
 </style>
