@@ -1,28 +1,34 @@
 <template>
   <div class="music-player">
     <!-- Audio elem -->
+    <!-- Az audio lejátszó elem: az 'audio' tag tartalmazza a zene forrást és vezérli a lejátszást -->
     <audio ref="audio" :src="audioSrc" :loop="true" :muted="muted" autoplay />
-
+    
     <div class="music-controls">
       <!-- Play/Pause gomb ikon -->
+      <!-- Gomb a zene lejátszásának/megállításának vezérlésére -->
       <button @click="toggleMusic">
         <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
       </button>
 
       <!-- Mute/Unmute gomb ikon -->
+      <!-- Gomb a zene némításának/újra hangosításának vezérlésére -->
       <button @click="toggleMute">
         <i :class="muted ? 'fas fa-volume-mute' : 'fas fa-volume-up'"></i>
       </button>
 
       <!-- Hangerő ikonok és csúszka -->
+      <!-- Hangerő vezérlő rész, ami tartalmazza a hangerő csökkentő és növelő gombokat, valamint egy csúszkát -->
       <div class="volume-control">
+        <!-- Hangerő csökkentése gomb -->
         <button @mousedown="startVolumeDecrease" @mouseup="stopVolumeChange" @mouseleave="stopVolumeChange">
           <i class="fas fa-volume-down"></i>
         </button>
 
-        <!-- Hangerő csúszka -->
+        <!-- Hangerő csúszka a hangerő beállítására -->
         <input id="volume" type="range" min="0" max="1" step="0.01" v-model="volume" @input="updateVolume" />
 
+        <!-- Hangerő növelése gomb -->
         <button @mousedown="startVolumeIncrease" @mouseup="stopVolumeChange" @mouseleave="stopVolumeChange">
           <i class="fas fa-volume-up"></i>
         </button>
@@ -35,84 +41,102 @@
 export default {
   data() {
     return {
+      // Állapot, hogy a zene lejátszódik-e
       isPlaying: false, // Kezdetben nem játszódik a zene
+      // Állapot a némításhoz
       muted: true, // Kezdetben némított
+      // Állapot a hangerő szabályozásához (max 1)
       volume: 1, // Kezdeti hangerő (maximális)
-      audioSrc: '/public/Zene/Genesis.mp3', // Zene fájl elérési útja
+      // A zene fájl elérési útja
+      audioSrc: '/public/Zene/Genesis.mp3', // A zene fájl elérési útja
+      // Interval a hangerő folyamatos változtatásához
       volumeInterval: null, // Interval a hangerő folyamatos változtatásához
     };
   },
   methods: {
-    // Play/Pause vezérlés
+    // Play/Pause funkciók vezérlése
     toggleMusic() {
       if (this.isPlaying) {
+        // Ha a zene játszódik, megállítjuk
         this.$refs.audio.pause();
       } else {
+        // Ha a zene áll, elindítjuk
         this.$refs.audio.play();
       }
+      // A lejátszás állapotának váltása
       this.isPlaying = !this.isPlaying;
 
-      // Tároljuk a lejátszás állapotát a localStorage-ban
+      // A lejátszási állapot tárolása a localStorage-ban
       localStorage.setItem('isPlaying', this.isPlaying ? 'true' : 'false');
     },
 
-    // Mute/Unmute vezérlés
+    // Mute/Unmute funkciók vezérlése
     toggleMute() {
+      // A némítást váltjuk
       this.muted = !this.muted;
+      // A némítás állapotának alkalmazása az audio elemre
       this.$refs.audio.muted = this.muted;
+      // A némítás állapotának tárolása a localStorage-ban
       localStorage.setItem('muted', this.muted ? 'true' : 'false');
     },
 
-    // Hangerő változtatása
+    // Hangerő frissítése a csúszka értéke alapján
     updateVolume() {
-      this.$refs.audio.volume = this.volume; // Alkalmazza a hangerőt a zenére
-      localStorage.setItem('volume', this.volume); // Hangerő mentése
+      // Alkalmazza a jelenlegi hangerőt az audio elemre
+      this.$refs.audio.volume = this.volume;
+      // A hangerő tárolása a localStorage-ban
+      localStorage.setItem('volume', this.volume);
     },
 
-    // Hangerő változtatás kezdete (csökkentés)
+    // Hangerő csökkentésének indítása, ha a gombot nyomva tartjuk
     startVolumeDecrease() {
       if (this.volume > 0) {
+        // Interval létrehozása a hangerő fokozatos csökkentésére
         this.volumeInterval = setInterval(() => {
           if (this.volume > 0) {
-            this.volume -= 0.01; // Csökkenti a hangerőt
-            this.updateVolume();
+            this.volume -= 0.01; // A hangerő csökkentése
+            this.updateVolume(); // A hangerő frissítése az audio elemre
           }
-        }, 50); // 50 ms-enként csökkentjük
+        }, 50); // Minden 50 ms-ban frissítjük
       }
     },
 
-    // Hangerő változtatás kezdete (növelés)
+    // Hangerő növelésének indítása, ha a gombot nyomva tartjuk
     startVolumeIncrease() {
       if (this.volume < 1) {
+        // Interval létrehozása a hangerő fokozatos növelésére
         this.volumeInterval = setInterval(() => {
           if (this.volume < 1) {
-            this.volume += 0.01; // Növeli a hangerőt
-            this.updateVolume();
+            this.volume += 0.01; // A hangerő növelése
+            this.updateVolume(); // A hangerő frissítése az audio elemre
           }
-        }, 50); // 50 ms-enként növeljük
+        }, 50); // Minden 50 ms-ban frissítjük
       }
     },
 
-    // Leállítja a hangerő változtatását
+    // Megállítja a hangerő változtatását, ha elengedjük a gombot
     stopVolumeChange() {
-      clearInterval(this.volumeInterval); // Megállítja a folyamatos hangerő változtatást
+      // Az interval törlése és a hangerő változtatás megállítása
+      clearInterval(this.volumeInterval);
       this.volumeInterval = null;
     },
   },
   mounted() {
-    // Ellenőrizzük a localStorage-ban tárolt adatokat
+    // A komponens betöltésekor ellenőrizzük a localStorage-ban tárolt adatokat
     const isPlaying = localStorage.getItem('isPlaying') === 'true';
     const muted = localStorage.getItem('muted') === 'true';
     const volume = parseFloat(localStorage.getItem('volume')) || 1;
 
+    // A tárolt állapotok alkalmazása
     this.isPlaying = isPlaying;
     this.muted = muted;
     this.volume = volume;
 
-    // Alkalmazzuk a tárolt adatokat
+    // A hangerő és a némítás alkalmazása az audio elemre
     this.$refs.audio.volume = volume;
     this.$refs.audio.muted = muted;
 
+    // Ha a zene már előzőleg lejátszásra került, automatikusan elindítjuk
     if (isPlaying) {
       this.$refs.audio.play();
     } else {
@@ -120,7 +144,7 @@ export default {
     }
   },
   beforeDestroy() {
-    // Zene megállítása a komponens törlésénél
+    // A komponens törlésekor leállítjuk a zenét
     this.$refs.audio.pause();
   }
 };
@@ -145,7 +169,7 @@ export default {
 }
 
 .music-controls button:hover {
-  color: #ff4757;
+  color: #ff4757; /* Hover hatás */
 }
 
 .volume-control {
@@ -168,7 +192,7 @@ export default {
 }
 
 .volume-control button:hover {
-  color: #ff4757;
+  color: #ff4757; /* Hover hatás */
 }
 
 .volume-control input {
