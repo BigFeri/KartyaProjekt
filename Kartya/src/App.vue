@@ -24,7 +24,6 @@
               <label for="searchQuery" class="form-label text-nowrap m-0 search-label"></label>
               <input id="searchQuery" class="form-control me-2 ms-2 search-input" type="search" aria-label="Search"
                 v-model="searchQueryInput" @keyup.enter="performSearch" />
-              <button class="btn btn-outline-danger search-button" type="submit" @click="performSearch">Search</button>
             </div>
           </nav>
         </div>
