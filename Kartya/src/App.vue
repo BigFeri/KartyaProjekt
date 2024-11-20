@@ -6,29 +6,33 @@
           <h1>Kártya Projekt</h1>
           <nav class="navbar">
             <!-- Zenelejátszó és vezérlők a jobb oldalon -->
+            <!-- A MusicPlayer komponens beillesztése a zenelejátszó vezérléséhez -->
             <div class="music-controls">
               <MusicPlayer />
             </div>
             <!-- Navigációs linkek -->
             <div class="navbar-links">
+              <!-- A főoldal, táblázat és kártyák oldalra mutató linkek -->
               <RouterLink to="/">Home</RouterLink> |
               <RouterLink to="/tablazat">Táblázat</RouterLink> |
               <RouterLink to="/kartyak">Kártyák</RouterLink> |
             </div>
 
-            
+            <!-- Keresőmező, amely csak akkor látszik, ha nem a főoldalon vagyunk -->
             <div v-if="!isHomePage" class="d-flex align-items-center search-container" role="search">
-            <label for="searchQuery" class="form-label text-nowrap m-0 search-label"></label>
-            <input id="searchQuery" class="form-control me-2 ms-2 search-input" type="search" aria-label="Search"
-              v-model="searchQueryInput" @keyup.enter="performSearch" />
-            <button class="btn btn-outline-danger search-button" type="submit" @click="performSearch">Search</button>
-          </div>
+              <!-- Kereső címke és beviteli mező -->
+              <label for="searchQuery" class="form-label text-nowrap m-0 search-label"></label>
+              <input id="searchQuery" class="form-control me-2 ms-2 search-input" type="search" aria-label="Search"
+                v-model="searchQueryInput" @keyup.enter="performSearch" />
+              <button class="btn btn-outline-danger search-button" type="submit" @click="performSearch">Search</button>
+            </div>
           </nav>
         </div>
       </div>
     </header>
 
     <div class="my-border p-3">
+      <!-- A dinamikusan betöltődő komponens helye, amely az aktuális route-nak megfelelő tartalmat jeleníti meg -->
       <RouterView />
     </div>
   </div>
@@ -39,17 +43,17 @@ import { RouterLink, RouterView } from "vue-router";
 import { computed } from "vue";
 import MusicPlayer from './components/Music.vue'; // Importáljuk a MusicPlayer komponenst
 
-
 export default {
   components: {
-    MusicPlayer,
+    MusicPlayer, // Hozzáadjuk a MusicPlayer komponenst
   },
   provide() {
     return {
-      searchQuery: computed(() => this.searchQuery),
+      searchQuery: computed(() => this.searchQuery), // Keresési lekérdezés biztosítása más komponensek számára
     };
   },
   watch: {
+    // Figyeljük a keresési szót, ha változik, akkor frissítjük a keresési lekérdezést
     searchWordInput(data) {
       if (!data) {
         this.searchQuery = null;
@@ -57,6 +61,7 @@ export default {
         this.searchQuery = data;
       }
     },
+    // Figyeljük a keresési bevitelt, ha változik, akkor frissítjük a lekérdezést
     searchQueryInput(newValue) {
       if (!newValue) {
         this.searchQuery = null;
@@ -67,16 +72,18 @@ export default {
   },
   data() {
     return {
-      searchQuery: null,
-      searchQueryInput: null,
+      searchQuery: null, // Keresési lekérdezés alapértéke
+      searchQueryInput: null, // Keresési beviteli mező alapértéke
     };
   },
   computed: {
+    // Ellenőrizzük, hogy az aktuális oldal a főoldal-e
     isHomePage() {
       return this.$route.path === "/";
     }
   },
   methods: {
+    // Keresés indítása, a keresési bevitelt tároljuk a keresési lekérdezésben
     performSearch() {
       this.searchQuery = this.searchQueryInput;
     }
@@ -85,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-/* Global styles */
+/* Globális stílusok */
 body {
   color: #ffffff;
   font-family: 'Arial', sans-serif;
@@ -93,7 +100,7 @@ body {
   padding: 0;
 }
 
-/* Header styles */
+/* Fejléc stílusa */
 header {
   background: linear-gradient(135deg, #000000, #4b4b4b);
   padding: 20px;
@@ -106,6 +113,7 @@ header {
   margin: auto;
 }
 
+/* Cím stílusa */
 h1 {
   font-size: 2.5em;
   font-weight: bold;
@@ -114,7 +122,7 @@ h1 {
   text-transform: uppercase;
 }
 
-/* Navbar styles */
+/* Navigációs sáv stílusa */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -136,7 +144,7 @@ h1 {
 }
 
 .navbar-links a:hover {
-  color: #ff4757;
+  color: #ff4757; /* Hover hatás, amikor az egér rámutat */
 }
 
 /* Zenelejátszó vezérlők elhelyezése a jobb oldalon */
@@ -157,9 +165,10 @@ h1 {
 }
 
 .music-controls button:hover {
-  color: #ff4757;
+  color: #ff4757; /* Hover hatás a gombokon */
 }
 
+/* Hangerő vezérlő doboz */
 .volume-control {
   display: flex;
   align-items: center;
@@ -167,7 +176,7 @@ h1 {
 }
 
 .volume-control input {
-  width: 100px;
+  width: 100px; /* A hangerő csúszka szélessége */
 }
 
 /* Reszponzív stílusok kisebb képernyőkre */
@@ -177,7 +186,7 @@ h1 {
   }
 
   h1 {
-    font-size: 2em;
+    font-size: 2em; /* Cím kisebb képernyőn */
   }
 
   .navbar-links {
@@ -196,13 +205,13 @@ h1 {
   }
 
   .volume-control input {
-    width: 80px;
+    width: 80px; /* Kisebb csúszka szélesség mobilon */
   }
 }
 
 @media (max-width: 576px) {
   h1 {
-    font-size: 1.5em;
+    font-size: 1.5em; /* Cím még kisebb képernyőn */
   }
 
   .navbar-links {
@@ -210,8 +219,7 @@ h1 {
   }
 
   .music-controls button {
-    font-size: 1.2rem;
-    /* Kisebb ikonok mobilon */
+    font-size: 1.2rem; /* Kisebb gombok mobilon */
   }
 }
 </style>
